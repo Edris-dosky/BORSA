@@ -26,7 +26,7 @@ class ClientRequest extends FormRequest
             "email" => "nullable|email|max:100",
             "phone" => "nullable|numeric",
             "address" => "nullable|string",
-            "type" => "
+            "type" => "nullable|string",
         ];
     }
 }
