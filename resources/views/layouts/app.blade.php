@@ -10,7 +10,11 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/styles/tailwind.css">
+        <link rel="stylesheet" href="https://demos.creative-tim.com/notus-js/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+        <!-- component -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -28,9 +32,37 @@
             @endisset
 
             <!-- Page Content -->
+            
             <main>
-                {{ $slot }}
+                @yield('content')
             </main>
         </div>
+        @if (session('success'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                swal({
+                    title: "Success!",
+                    text: "{{ session('success') }}",
+                    icon: "success",
+                    button: "OK",
+                });
+            });
+        </script>
+      @endif
+      @if ($errors->any())
+      <script>
+          document.addEventListener('DOMContentLoaded', function() {
+              swal({
+                  title: "Error!",
+                  text: "{{ $errors->first() }}",
+                  icon: "error",
+                  button: "OK",
+              });
+          });
+      </script>
+    @endif
     </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<!-- SweetAlert JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>

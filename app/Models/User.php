@@ -45,4 +45,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function userCurrencies(){
+        return $this->hasMany(Currency::class, 'user_id');
+    }
+    public function currencyAmounts()
+    {
+        return $this->hasMany(CurrencyAmount::class, 'user_id');
+    }
+    public function clients()
+    {
+        return $this->hasMany(Client::class, 'user_id');
+    }
 }

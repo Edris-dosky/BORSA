@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('address',255)->nullable();
             $table->string('type',50)->comment('company or person');
             $table->text('picture')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

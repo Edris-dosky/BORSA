@@ -14,11 +14,8 @@ return new class extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->double('USD')->nullable();
-            $table->double('EUR')->nullable();
-            $table->double('IRR')->nullable();
-            $table->double('IQD')->nullable();
-            $table->double('TRY')->nullable();
+            $table->string('currency')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

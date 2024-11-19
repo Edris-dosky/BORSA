@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('withdraws', function (Blueprint $table) {
+        Schema::create('currency_amounts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('currency_id')->nullable()->constrained('currencies')->onDelete('cascade');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('amount_id')->nullable()->constrained('amounts')->onDelete('set null');
-            $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('set null');
-            $table->softDeletes();
+            $table->double('amount');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('withdraws');
+        Schema::dropIfExists('currency_amounts');
     }
 };

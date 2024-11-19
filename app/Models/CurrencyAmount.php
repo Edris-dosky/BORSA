@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Client extends Model
+class CurrencyAmount extends Model
 {
-    use SoftDeletes;
     protected $guarded = [];
-    //
+    public function currency(){
+        return $this->belongsTo(Currency::class,'currency_id');
+    }
+    
+    
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id'); // Specify the foreign key if it's not the default

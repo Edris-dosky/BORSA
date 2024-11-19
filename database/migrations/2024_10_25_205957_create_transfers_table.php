@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('amount_id')->nullable()->constrained('amounts')->onDelete('set null');
             $table->foreignId('client_id')->nullable()->constrained('clients')->onDelete('set null');
             $table->boolean('recieved')->default('0');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
