@@ -35,8 +35,8 @@
         <div class="mb-6">
           <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Client Type</label>
           <select id="type" name="type" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
-            <option value="Customer">Customer</option>
-            <option value="Vendor">Vendor</option>
+            <option value="Person">Person</option>
+            <option value="Company">Company</option>
           </select>
         </div>
         

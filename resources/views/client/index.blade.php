@@ -35,10 +35,11 @@
                 <td class="px-4 py-3">{{$client->phone}}</td>
                 <td class="px-4 py-3">{{$client->address}}</td>
                 <td class="px-4 py-3">{{$client->type}}</td>
-                <td class="px-4 py-3">{{$client->user->name}}</td>
+                <td class="px-4 py-3">{{$client->user?->name}}</td>
                 <td class="px-4 py-3 text-center flex gap-1">
                   <button class="bg-indigo-500 text-white px-4 py-2 rounded-md text-xs hover:bg-blue-600 focus:outline-none">Edit</button>
                   <button class="bg-red-500 text-white px-3 py-2 rounded-md text-xs hover:bg-red-600 focus:outline-none">Delete</button>
+                  <a href="{{route('client.show',$client->id)}}" class="bg-red-500 text-white px-3 py-2 rounded-md text-xs hover:bg-red-600 focus:outline-none">Show</a>
                 </td>
               </tr> 
             @empty

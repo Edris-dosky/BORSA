@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -29,15 +30,54 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the form inputs
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:clients,email',
+            'phone' => 'required|string|max:15',
+            'address' => 'required|string|max:255',
+            'type' => 'required|string|in:Person,Company',
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:2048', // Optional image validation
+        ]);
+
+        // Handle file upload using Request::file()
+        $path = null;
+        if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
+            // Using Request::file() to get the uploaded file
+            $file = $request->file('picture');
+            
+            // Generate a unique filename for the image
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            
+            +-
+            // Store the image in 'public/images' directory and get the path
+            $path = $file->storeAs('public/images', $filename);
+        }
+
+        // Insert the client associated with the authenticated user
+        Client::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
+            'address' => $request->input('address'),
+            'type' => $request->input('type'),
+            'picture' => $path,
+            'user_id' => Auth::id(), // Directly associate the user ID with the client
+        ]);
         
-    }
+        // Redirect back or to the client index page with a success message
+        return redirect()->route('client.index')->with('success', 'Client added successfully!');
+        }
+                
+    
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $client = Client::find($id);
+        return view('client.show', compact('client'));
     }
 
     /**
