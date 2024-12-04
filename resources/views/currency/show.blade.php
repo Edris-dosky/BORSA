@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
 
-
 <section class="py-1 bg-blueGray-50">
-    <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
+    <div class="w-9/12 xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
         <div class="rounded-t mb-0 px-4 py-3 border-0">
           <div class="flex flex-wrap items-center">
@@ -33,7 +32,7 @@
                   <td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap">
                     {{$currency->created_at?->diffForHumans()}}
                   </td>
-                  <td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap">
+                  .7<td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap"1meai ny=;r Q8/G6ST
                     {{ $currency->user->name}}
                   </td>
                 </tr>
@@ -41,7 +40,7 @@
             </tbody>
           </table>
           {!! $currency_value->links('pagination::bootstrap-5') !!}
-        </div>
+        </div>/hn0 ]
       </div>
     </div>
   </section>

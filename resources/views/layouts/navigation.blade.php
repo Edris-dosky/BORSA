@@ -3,12 +3,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
                 <div class="shrink-0 flex items-center mx-4">
                     <a href="{{ route('currency.index') }}">
                         currency
@@ -21,13 +15,33 @@
                 </div>
                 <div class="shrink-0 flex items-center mx-4">
                     <a href="{{ route('exchange.index') }}">
-                        index
+                        exchange
+                    </a>
+                </div>
+                <div class="shrink-0 flex items-center mx-4">
+                    <a href="/deposits">
+                        deposits
+                    </a>
+                </div>
+                <div class="shrink-0 flex items-center mx-4">
+                    <a href="/transfers">
+                        transfers
+                    </a>
+                </div>
+                <div class="shrink-0 flex items-center mx-4">
+                    <a href="/users">
+                        users
+                    </a>
+                </div>
+                <div class="shrink-0 flex items-center mx-4">
+                    <a href="/withdraws">
+                        withdraws
                     </a>
                 </div>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        Dashboard
                     </x-nav-link>
                 </div>
             </div>
@@ -81,8 +95,29 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link href="/dashboard">
+                Dashboard
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/currency">
+                currency
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/clients">
+                clients
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/exchange">
+                exchange
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/deposits">
+                deposits
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/transfers">
+                transfers
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/users">
+                users
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/withdraws">
+                withdraws
             </x-responsive-nav-link>
         </div>
 
@@ -112,3 +147,6 @@
         </div>
     </div>
 </nav>
+
+<!-- Add AlpineJS -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>

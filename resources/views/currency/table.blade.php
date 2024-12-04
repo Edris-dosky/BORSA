@@ -51,7 +51,7 @@ function percentageDifference($num1, $num2) {
 </style>
 
 <section class="py-1 bg-blueGray-50">
-    <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
+    <div class="w-9/12 xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
             <div class="rounded-t mb-0 px-4 py-3 border-0">
                 <div class="flex flex-wrap items-center">
@@ -62,7 +62,7 @@ function percentageDifference($num1, $num2) {
                         Add Currency
                     </button>
                    <!-- Add Currency Modal -->
-                        <div id="currencyModalAdd" class="modal hidden fixed z-50 inset-0 flex items-center justify-center">
+                        <div id="currencyModalAdd" class="modal hiddenZerxady-wl fixed z-50 inset-0 flex items-center justify-center">
                           <div class="modal-content bg-white rounded-lg p-6 shadow-lg">
                               <h2 class="text-xl font-semibold text-gray-700 mb-8">Add Currency</h2>
                               <span id="closeModal" class="close text-gray-600">&times;</span>     
