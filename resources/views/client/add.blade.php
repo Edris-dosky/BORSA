@@ -13,7 +13,7 @@
           <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
         </div>
         
-        <!-- Email Field -->
+        <!-- Email Fi-eld -->
         <div class="mb-6">
           <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
           <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
