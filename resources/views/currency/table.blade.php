@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-@section('content')
 @php
 function percentageDifference($num1, $num2) {
     $data = [];
@@ -27,6 +25,8 @@ function percentageDifference($num1, $num2) {
 }
 @endphp
 
+@section('content')
+
 <style>
   .modal {
       display: flex;
@@ -49,7 +49,7 @@ function percentageDifference($num1, $num2) {
       cursor: pointer;
   }
 </style>
-
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <section class="py-1 bg-blueGray-50">
     <div class="w-9/12 xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
@@ -62,7 +62,7 @@ function percentageDifference($num1, $num2) {
                         Add Currency
                     </button>
                    <!-- Add Currency Modal -->
-                        <div id="currencyModalAdd" class="modal hiddenZerxady-wl fixed z-50 inset-0 flex items-center justify-center">
+                        <div id="currencyModalAdd" class="modal hidden hiddenZerxady-wl fixed z-50 inset-0 flex items-center justify-center">
                           <div class="modal-content bg-white rounded-lg p-6 shadow-lg">
                               <h2 class="text-xl font-semibold text-gray-700 mb-8">Add Currency</h2>
                               <span id="closeModal" class="close text-gray-600">&times;</span>     
@@ -194,6 +194,7 @@ const closeModalEdit = document.getElementById('closeModalEdit');
 const editButtons = document.querySelectorAll('.edit-btn');
 const currencyForm = document.getElementById('currencyForm');
 
+
 // Open Add Modal
 openModal.onclick = function() {
     modalAdd.classList.remove('hidden');
@@ -240,6 +241,41 @@ window.onclick = function(event) {
         modalEdit.classList.add('hidden');
     }
 }
+
+
+const deleteButtons = document.querySelectorAll('.delete-btn');
+
+// Add event listener for each delete button
+deleteButtons.forEach(button => {
+    button.addEventListener('click', function () {
+        const currencyId = this.getAttribute('data-id');
+        const url = this.getAttribute('data-url');
+        
+        // Ask for confirmation before deletion
+        if (confirm("Are you sure you want to delete this currency?")) {
+            // Send a DELETE request using Fetch API
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Remove the row from the table after successful deletion
+                    this.closest('tr').remove();
+                } else {
+                    alert("Failed to delete currency.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred while trying to delete the currency.");
+            });
+        }
+    });
+});
+
 </script>
 
 @endsection

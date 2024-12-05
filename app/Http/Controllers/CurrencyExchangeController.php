@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Currency;
 use Illuminate\Http\Request;
 
 class CurrencyExchangeController extends Controller
@@ -11,7 +13,6 @@ class CurrencyExchangeController extends Controller
      */
     public function index()
     {   
-
         return view('exchange.index');
     }
 
@@ -20,7 +21,9 @@ class CurrencyExchangeController extends Controller
      */
     public function create()
     {
-        return view('exchange.form');
+        $currencies =   Currency::with(['currencyAmount.user'])->get();
+        $clients = Client::all();
+        return view('exchange.form',compact('currencies','clients'));
     }
 
     /**

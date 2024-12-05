@@ -32,7 +32,7 @@
                   <td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap">
                     {{$currency->created_at?->diffForHumans()}}
                   </td>
-                  .7<td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap"1meai ny=;r Q8/G6ST
+                  <td class="border-t-0 px-4 py-2 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap"1meai ny=;r Q8/G6ST
                     {{ $currency->user->name}}
                   </td>
                 </tr>
@@ -40,7 +40,7 @@
             </tbody>
           </table>
           {!! $currency_value->links('pagination::bootstrap-5') !!}
-        </div>/hn0 ]
+        </div>
       </div>
     </div>
   </section>
