@@ -43,7 +43,7 @@ class CurrencyController extends Controller
                 'amount' => $validatedData['amount'],
             ]);
         }
-         return redirect()->back()->with('success', 'Currency added successfully!');;
+         return redirect()->back()->with('success', 'Currency added successfully!');
     }
 
     /**

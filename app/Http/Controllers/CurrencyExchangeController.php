@@ -31,7 +31,7 @@ class CurrencyExchangeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
