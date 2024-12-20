@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'image',
+        'role',
     ];
 
     /**
@@ -55,5 +58,9 @@ class User extends Authenticatable
     public function clients()
     {
         return $this->hasMany(Client::class, 'user_id');
+    }
+    public function exchanges_user() {
+        return $this->hasMany(CurrencyExchange::class, 'user_id');
+        
     }
 }

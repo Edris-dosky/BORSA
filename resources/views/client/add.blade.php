@@ -1,57 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="bg-white p-8 rounded-lg shadow-lg max-w-4xl w-4/5 mx-auto mt-10">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Add New Client</h2>
-      
-      <form id="addClientForm" action="{{route('client.store')}}" method="POST" enctype="multipart/form-data">
-        @csrf
-        
-        <!-- Name Field -->
-        <div class="mb-6">
-          <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-          <input type="text" id="name" name="name" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
+    <div class="container mt-5">
+      <div class="card shadow-lg rounded-lg">
+        <div class="card-header bg-primary text-white">
+          <h2 class="h4 mb-0">Add New Client</h2>
         </div>
-        
-        <!-- Email Fi-eld -->
-        <div class="mb-6">
-          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-          <input type="email" id="email" name="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
-        </div>
+        <div class="card-body">
+          <form id="addClientForm" action="{{route('client.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-        <!-- Phone Field -->
-        <div class="mb-6">
-          <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-          <input type="text" id="phone" name="phone" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
-        </div>
+            <!-- Name Field -->
+            <div class="mb-4">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="Enter full name" required>
+            </div>
 
-        <!-- Address Field -->
-        <div class="mb-6">
-          <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-          <input type="text" id="address" name="address" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
-        </div>
+            <!-- Email Field -->
+            <div class="mb-4">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="Enter email address" required>
+            </div>
 
-        <!-- Client Type Dropdown -->
-        <div class="mb-6">
-          <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Client Type</label>
-          <select id="type" name="type" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition" required>
-            <option value="Person">Person</option>
-            <option value="Company">Company</option>
-          </select>
-        </div>
-        
-        <!-- Profile Picture Upload -->
-        <div class="mb-6">
-          <label for="picture" class="block text-sm font-medium text-gray-700 mb-1">Client Picture</label>
-          <input type="file" id="picture" name="picture" accept="image/*" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-        </div>
+            <!-- Phone Field -->
+            <div class="mb-4">
+              <label for="phone" class="form-label">Phone Number</label>
+              <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter phone number" required>
+            </div>
 
-        <!-- Action Buttons -->
-        <div class="flex justify-end space-x-4">
-          <a href="{{route('client.index')}}" type="button"  class="bg-gray-500 text-white px-6 py-2 rounded-md text-sm hover:bg-gray-600 focus:outline-none transition">Cancel</a>
-          <button type="submit" class="bg-indigo-500 text-white px-6 py-2 rounded-md text-sm hover:bg-indigo-700 focus:outline-none transition">Save Client</button>
+            <!-- Address Field -->
+            <div class="mb-4">
+              <label for="address" class="form-label">Address</label>
+              <input type="text" id="address" name="address" class="form-control" placeholder="Enter address" required>
+            </div>
+
+            <!-- Client Type Dropdown -->
+            <div class="mb-4">
+              <label for="type" class="form-label">Client Type</label>
+              <select id="type" name="type" class="form-select" required>
+                <option value="Person">Person</option>
+                <option value="Company">Company</option>
+              </select>
+            </div>
+
+            <!-- Profile Picture Upload -->
+            <div class="mb-4">
+              <label for="picture" class="form-label">Client Picture</label>
+              <input type="file" id="picture" name="picture" accept="image/*" class="form-control">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-end gap-3">
+              <a href="{{route('client.index')}}" type="button" class="btn btn-secondary">Cancel</a>
+              <button type="submit" class="btn btn-success">Save Client</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-
 @endsection

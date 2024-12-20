@@ -1,53 +1,57 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex justify-center items-center min-h-screen bg-gray-50">
+<div class="d-flex justify-content-center align-items-start min-vh-100 bg-light">
     <!-- Set width to 90% of screen -->
-    <div class="w-[90%] max-w-6xl bg-white shadow-md rounded-lg p-6">
-      <!-- Add Client Button -->
-      <div class="mb-4 flex justify-end">
-        <a href="{{route('client.create')}}" class="bg-indigo-500 text-white px-4 py-2 rounded-md text-sm hover:bg-green-600 focus:outline-none">
-          Add Client
-        </a>
-      </div>
-  
-      <!-- Table -->
-      <div class="overflow-x-auto">
-        <table class="min-w-full w-full table-auto border-collapse">
-          <thead>
-            <tr class="bg-gray-100 text-left text-sm font-medium text-gray-600">
-              <th class="px-2 py-3 border-b">#</th>
-              <th class="px-4 py-3 border-b">Name</th>
-              <th class="px-4 py-3 border-b">Email</th>
-              <th class="px-4 py-3 border-b">Phone</th>
-              <th class="px-4 py-3 border-b">Address</th>
-              <th class="px-4 py-3 border-b">Type</th>
-              <th class="px-4 py-3 border-b">User added</th>
-              <th class="px-4 py-3 border-b">Actions</th>
-            </tr>
-          </thead>
-          <tbody class="text-sm text-gray-700">
-            @forelse ($clients as $index => $client)
-            <tr class="border-b hover:bg-gray-50">
-                <td class="px-2 py-3">{{$index+1}}</td>
-                <td class="px-4 py-3">{{$client->name}}</td>
-                <td class="px-4 py-3">{{$client->email}}</td>
-                <td class="px-4 py-3">{{$client->phone}}</td>
-                <td class="px-4 py-3">{{$client->address}}</td>
-                <td class="px-4 py-3">{{$client->type}}</td>
-                <td class="px-4 py-3">{{$client->user?->name}}</td>
-                <td class="px-4 py-3 text-center flex gap-1">
-                  <button class="bg-indigo-500 text-white px-4 py-2 rounded-md text-xs hover:bg-blue-600 focus:outline-none">Edit</button>
-                  <button class="bg-red-500 text-white px-3 py-2 rounded-md text-xs hover:bg-red-600 focus:outline-none">Delete</button>
-                  <a href="{{route('client.show',$client->id)}}" class="bg-red-500 text-white px-3 py-2 rounded-md text-xs hover:bg-red-600 focus:outline-none">Show</a>
-                </td>
-              </tr> 
-            @empty
-                <tr><td colspan="8" class="text-center py-3">No clients found</td></tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
+    <div class="w-100 mx-auto bg-white shadow-lg rounded p-5" style="max-width: 1200px;">
+        <!-- Add Client Button -->
+        <div class="mb-4 d-flex justify-content-end">
+            <a href="{{route('client.create')}}" class="btn btn-primary btn-lg">
+                Add Client
+            </a>
+        </div>
+
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">User added</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($clients as $index => $client)
+                    <tr>
+                        <td class="align-middle">{{$index+1}}</td>
+                        <td class="align-middle">{{$client->name}}</td>
+                        <td class="align-middle">{{$client->email}}</td>
+                        <td class="align-middle">{{$client->phone}}</td>
+                        <td class="align-middle">{{$client->address}}</td>
+                        <td class="align-middle">{{$client->type}}</td>
+                        <td class="align-middle">{{$client->user?->name}}</td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-primary btn-sm">Edit</button>
+                                <button class="btn btn-danger btn-sm">Delete</button>
+                                <a href="{{route('client.show',$client->id)}}" class="btn btn-info btn-sm">Show</a>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="8" class="text-center">No clients found</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
+</div>
 @endsection

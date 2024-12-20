@@ -9,4 +9,7 @@ class CurrencyExchange extends Model
 {
     use SoftDeletes;
     protected $guarded = [];
+    public function users(){
+        return $this->belongsTo(User::class ,'user_id');
+    }
 }

@@ -1,109 +1,113 @@
 @extends('layouts.app')
+
 @section('content')
 
 <div class="container mt-5">
-    <h2 class="mb-4 text-2xl font-semibold">Transaction Form</h2>
-    <form action="{{ route('exchange.store') }}" method="POST">
-        @csrf
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div>
-                <label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
-                <input type="number" name="amount" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="amount" placeholder="Enter amount">
-            </div>
-            <div class="flex gap-1">
-                <div class="w-1/2">
-                    <label for="from" class="block text-sm font-medium text-gray-700">From</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="from" name="from">
-                        @foreach ($currencies as $currency)
-                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
-                                {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-1/2">
-                    <label for="to" class="block text-sm font-medium text-gray-700">To</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="to" name="to">
-                        @foreach ($currencies as $currency)
-                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
-                                {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+    <div class="card shadow-lg rounded-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="h4 mb-0">Transaction Form</h2>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="flex gap-1">
-                <div class="w-1/2">
-                    <label for="client_id" class="block text-sm font-medium text-gray-700">Client ID</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="client_id" name="client_id">
-                       <option value="0" selected>Unknown</option>
-                      @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->name }}</option>
-                        @endforeach
-                    </select>
+        <div class="card-body">
+            <form action="{{ route('exchange.store') }}" method="POST">
+                @csrf
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="amount" class="form-label">Amount</label>
+                        <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="from" class="form-label">From</label>
+                        <select class="form-select" id="from" name="from">
+                            @foreach ($currencies as $currency)
+                                <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
+                                    {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="w-1/2">
-                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="phone" name="phone">
-                      <option value="0" selected>Unknown</option>
-                      @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->phone }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
 
-            <div class="flex gap-1 w-full">
-                <div class="w-1/2">
-                    <label for="fees" class="block text-sm font-medium text-gray-700">Fees</label>
-                    <input type="number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="fees" placeholder="Enter fees">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="to" class="form-label">To</label>
+                        <select class="form-select" id="to" name="to">
+                            @foreach ($currencies as $currency)
+                                <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
+                                    {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="client_id" class="form-label">Client ID</label>
+                        <select class="form-select" id="client_id" name="client_id">
+                            <option value="1" selected>Unknown</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="w-1/2">
-                    <label for="constraint" class="block text-sm font-medium text-gray-700">Fees Percentage %</label>
-                    <input type="number" step="1" min="0" max="100" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="constraint" placeholder="Enter constraint">
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <select class="form-select" id="phone" name="phone">
+                            <option value="1" selected>Unknown</option>
+                            @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->phone }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fees" class="form-label">Fees</label>
+                        <input type="number" class="form-control" id="fees" name="fees" placeholder="Enter fees">
+                    </div>
                 </div>
-            </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="constraint" class="form-label">Fees Percentage %</label>
+                        <input type="text" class="form-control" id="constraint" name="constraint" placeholder="Enter constraint">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pay_method" class="form-label">Payment Method</label>
+                        <select class="form-select" id="pay_method" name="pay_method">
+                            <option selected>Choose...</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Status</label>
+                        <select class="form-select" id="status" name="status">
+                            <option selected>Choose...</option>
+                            <option value="pending">Pending</option>
+                            <option value="completed">Completed</option>
+                            <option value="failed">Failed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="Price" class="form-label">Price</label>
+                        <input type="number" name="price" class="form-control" id="Price" placeholder="Enter total" readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="total" class="form-label">Total</label>
+                        <input type="number" class="form-control" id="total" name="tottal" placeholder="Enter total" readonly>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100">Submit</button>
+            </form>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="flex gap-1">
-                <div class="w-1/2">
-                    <label for="pay_method" class="block text-sm font-medium text-gray-700">Payment Method</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="pay_method" name="pay_method">
-                        <option selected>Choose...</option>
-                        <option value="credit_card">Credit Card</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="bank_transfer">Bank Transfer</option>
-                    </select>
-                </div>
-                <div class="w-1/2">
-                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                    <select class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="status" name="status">
-                        <option selected>Choose...</option>
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                        <option value="failed">Failed</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex gap-1">
-              <div class="w-1/2">
-                <label for="Price" class="block text-sm font-medium text-gray-700">Price</label>
-                <input type="number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="Price" placeholder="Enter total" readonly>
-            </div>
-              <div class="w-1/2">
-                  <label for="total" class="block text-sm font-medium text-gray-700">Total</label>
-                  <input type="number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="total" placeholder="Enter total" readonly>
-              </div>
-             
-          </div>
-        </div>
-        
-        <button type="submit" class="mt-4 px-6 py-2 bg-indigo-500 text-white font-medium text-sm rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Submit</button>
-    </form>
+    </div>
 </div>
 
 <script>
@@ -119,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const fromSelect = document.getElementById('from');
     const toSelect = document.getElementById('to');
     const totalInput = document.getElementById('total');
-    const priceInput = document.getElementById('Price');  // New price input
+    const priceInput = document.getElementById('Price');
     const clientSelect = document.getElementById('client_id');
     const phoneSelect = document.getElementById('phone');
     const feesInput = document.getElementById('fees');
@@ -199,5 +203,5 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTotalAndSync();
 });
 </script>
-  
+
 @endsection

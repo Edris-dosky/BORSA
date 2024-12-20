@@ -1,152 +1,341 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="{{ route('currency.index') }}">
-                        currency
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="{{ route('client.index') }}">
-                        clients
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="{{ route('exchange.index') }}">
-                        exchange
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="/deposits">
-                        deposits
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="/transfers">
-                        transfers
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="/users">
-                        users
-                    </a>
-                </div>
-                <div class="shrink-0 flex items-center mx-4">
-                    <a href="/withdraws">
-                        withdraws
-                    </a>
-                </div>
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        Dashboard
-                    </x-nav-link>
-                </div>
-            </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+<nav class="topnav navbar navbar-light">
+    <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+      <i class="fe fe-menu navbar-toggler-icon"></i>
+    </button>
+    <form class="form-inline mr-auto searchform text-muted">
+      <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
+    </form>
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
+          <span class="fe fe-grid fe-16"></span>
+        </a>
+      </li>
+      <li class="nav-item nav-notif">
+        <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
+          <span class="fe fe-bell fe-16"></span>
+          <span class="dot dot-md bg-success"></span>
+        </a>
+      </li>
+      <li class="nav-item nav-notif">
+        <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target="#add-currency">
+          <span class="fe fe-dollar-sign fe-16"></span>
+        </a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="avatar avatar-sm mt-2">
+            <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="..." class="avatar-img rounded-circle">
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          <div>{{ Auth::user()->name }}</div>
+          <x-dropdown-link :href="route('profile.edit')" class="dropdown-item">
+            {{ __('Profile') }}
+        </x-dropdown-link>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+            <x-dropdown-link :href="route('logout')" class="dropdown-item"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-dropdown-link>
+        </form>
         </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="/dashboard">
-                Dashboard
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/currency">
-                currency
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/clients">
-                clients
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/exchange">
-                exchange
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/deposits">
-                deposits
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/transfers">
-                transfers
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/users">
-                users
-            </x-responsive-nav-link>
-            <x-responsive-nav-link href="/withdraws">
-                withdraws
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<!-- Add AlpineJS -->
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
+      </li>
+    </ul>
+  </nav>
+  <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+    <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+      <i class="fe fe-x"><span class="sr-only"></span></i>
+    </a>
+    <nav class="vertnav navbar navbar-light">
+      <!-- nav bar -->
+      <div class="w-100 mb-4 d-flex">
+        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+          <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
+            <g>
+              <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
+              <polygon class="st0" points="96,69 33,69 42,51 105,51 	" />
+              <polygon class="st0" points="78,33 15,33 24,15 87,15 	" />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+          <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-home fe-16"></i>
+            <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+            <li class="nav-item active">
+              <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./dashboard-analytics.html"><span class="ml-1 item-text">Analytics</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./dashboard-sales.html"><span class="ml-1 item-text">E-commerce</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./dashboard-saas.html"><span class="ml-1 item-text">Saas Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./dashboard-system.html"><span class="ml-1 item-text">Systems</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Components</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+          <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-box fe-16"></i>
+            <span class="ml-3 item-text">UI elements</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-color.html"><span class="ml-1 item-text">Colors</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-typograpy.html"><span class="ml-1 item-text">Typograpy</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-notification.html"><span class="ml-1 item-text">Notifications</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-modals.html"><span class="ml-1 item-text">Modals</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-tabs-accordion.html"><span class="ml-1 item-text">Tabs & Accordion</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./ui-progress.html"><span class="ml-1 item-text">Progress</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item w-100">
+          <a class="nav-link" href="{{ route('currency.index') }}">
+            <i class="fe fe-dollar-sign fe-16"></i>
+            <span class="ml-3 item-text">Currency</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-credit-card fe-16"></i>
+            <span class="ml-3 item-text">Client</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('client.index')}}"><span class="ml-1 item-text">Show Clients</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('client.create')}}"><span class="ml-1 item-text">Add Client</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-grid fe-16"></i>
+            <span class="ml-3 item-text">Exchange</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('exchange.index')}}"><span class="ml-1 item-text">Basic Tables</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('exchange.create')}}"><span class="ml-1 item-text">Add Exchange</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#Transaction" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-pie-chart fe-16"></i>
+            <span class="ml-3 item-text">Transaction</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="Transaction">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="deposite.php"><span class="ml-1 item-text">Deposite</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="withdraw.php"><span class="ml-1 item-text">Withdraw</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="currencyExchange.php"><span class="ml-1 item-text">Currency Exchange</span></a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#addAccount" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-user-plus fe-16"></i>
+            <span class="ml-3 item-text">Add Account</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="addAccount">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="client.php"><span class="ml-1 item-text">Client</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('users')}}"><span class="ml-1 item-text">User</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Apps</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+          <a class="nav-link" href="calendar.html">
+            <i class="fe fe-calendar fe-16"></i>
+            <span class="ml-3 item-text">Calendar</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-book fe-16"></i>
+            <span class="ml-3 item-text">Contacts</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+            <a class="nav-link pl-3" href="./contacts-list.html"><span class="ml-1">Contact List</span></a>
+            <a class="nav-link pl-3" href="./contacts-grid.html"><span class="ml-1">Contact Grid</span></a>
+            <a class="nav-link pl-3" href="./contacts-new.html"><span class="ml-1">New Contact</span></a>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#profile" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-user fe-16"></i>
+            <span class="ml-3 item-text">Profile</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="profile">
+            <a class="nav-link pl-3" href="./profile.html"><span class="ml-1">Overview</span></a>
+            <a class="nav-link pl-3" href="./profile-settings.html"><span class="ml-1">Settings</span></a>
+            <a class="nav-link pl-3" href="./profile-security.html"><span class="ml-1">Security</span></a>
+            <a class="nav-link pl-3" href="./profile-notification.html"><span class="ml-1">Notifications</span></a>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#fileman" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-folder fe-16"></i>
+            <span class="ml-3 item-text">File Manager</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="fileman">
+            <a class="nav-link pl-3" href="./files-list.html"><span class="ml-1">Files List</span></a>
+            <a class="nav-link pl-3" href="./files-grid.html"><span class="ml-1">Files Grid</span></a>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#support" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-compass fe-16"></i>
+            <span class="ml-3 item-text">Help Desk</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="support">
+            <a class="nav-link pl-3" href="./support-center.html"><span class="ml-1">Home</span></a>
+            <a class="nav-link pl-3" href="./support-tickets.html"><span class="ml-1">Tickets</span></a>
+            <a class="nav-link pl-3" href="./support-ticket-detail.html"><span class="ml-1">Ticket Detail</span></a>
+            <a class="nav-link pl-3" href="./support-faqs.html"><span class="ml-1">FAQs</span></a>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Extra</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+          <a href="#pages" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-file fe-16"></i>
+            <span class="ml-3 item-text">Pages</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100 w-100" id="pages">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-orders.html">
+                <span class="ml-1 item-text">Orders</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-timeline.html">
+                <span class="ml-1 item-text">Timeline</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-invoice.html">
+                <span class="ml-1 item-text">Invoice</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-404.html">
+                <span class="ml-1 item-text">Page 404</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-500.html">
+                <span class="ml-1 item-text">Page 500</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./page-blank.html">
+                <span class="ml-1 item-text">Blank</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#auth" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-shield fe-16"></i>
+            <span class="ml-3 item-text">Authentication</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="auth">
+            <a class="nav-link pl-3" href="./auth-login.html"><span class="ml-1">Login 1</span></a>
+            <a class="nav-link pl-3" href="./auth-login-half.html"><span class="ml-1">Login 2</span></a>
+            <a class="nav-link pl-3" href="./auth-register.html"><span class="ml-1">Register</span></a>
+            <a class="nav-link pl-3" href="./auth-resetpw.html"><span class="ml-1">Reset Password</span></a>
+            <a class="nav-link pl-3" href="./auth-confirm.html"><span class="ml-1">Confirm Password</span></a>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#layouts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-layout fe-16"></i>
+            <span class="ml-3 item-text">Layout</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="layouts">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./index.html"><span class="ml-1 item-text">Default</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./index-horizontal.html"><span class="ml-1 item-text">Top Navigation</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="./index-boxed.html"><span class="ml-1 item-text">Boxed</span></a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Documentation</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+          <a class="nav-link" href="../docs/index.html">
+            <i class="fe fe-help-circle fe-16"></i>
+            <span class="ml-3 item-text">Getting Start</span>
+          </a>
+        </li>
+      </ul>
+      <div class="btn-box w-100 mt-4 mb-1">
+        <button type="button" class="btn mb-2 btn-primary btn-lg btn-block">
+          <i class="fe fe-shopping-cart fe-12 mr-2"></i><span class="small">Buy now</span>
+        </button>
+      </div>
+    </nav>
+  </aside>
