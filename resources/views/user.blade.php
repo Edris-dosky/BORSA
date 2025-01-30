@@ -30,13 +30,15 @@
                 <tr>
                     <td>{{$index+1}}</td>
                     <td>{{$user->created_at}}</td>
-                    <td>{{$user->id}}</td>
+                    <td>{{$user->name}}</td>
                     <td>{{$user->phone_number}}</td>
                     <td>{{$user->email}}</td>
                     <td><img  class="rounded" src="{{ asset('storage/' . $user->image) }}" alt="" width="60px" height="70px"></td>
                     <td>{{$user->role}}</td>
                     <td>
-                        <a href="" class="btn btn-primary"><span class="fe fe-edit"></a>
+                        <a href="#" class="btn btn-primary btn-edit" data-toggle="modal" data-target="#editUser" data-id="{{ $user->id }}">
+                            <span class="fe fe-edit"></span>
+                        </a>
                         <button id='{{$user->id}}' class="btn btn-danger btndelete" ><span class="fe fe-trash" style="color:#ffffff" data-toggle="tooltip"  title="Delete"></span></button>
                     </td>
                 </tr>
@@ -170,5 +172,25 @@
         </div>
     </div>
 </div> <!-- Add User modal -->
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.btn-edit').on('click', function() {
+            var userId = $(this).data('id'); // Get the user ID from the button's data-id attribute
+            var user = {!! $users->toJson() !!}.find(user => user.id == userId); // Find the user in the users array
+
+            // Populate the form fields in the edit modal
+            $('#editUser #name').val(user.name);
+            $('#editUser #email').val(user.email);
+            $('#editUser #phone_number').val(user.phone_number);
+            $('#editUser #role').val(user.role);
+
+            // Update the form action URL to include the user ID
+            $('#dataForm').attr('action', '/users/' + userId);
+        });
+    });
+</script>
+
 @include('button')
 @endsection
