@@ -39,7 +39,7 @@ class ClientController extends Controller
             'type' => 'required|string|in:Person,Company',
             'picture' => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:2048', // Optional image validation
         ]);
-
+    
         // Handle file upload using Request::file()
         $path = null;
         if ($request->hasFile('picture') && $request->file('picture')->isValid()) {
@@ -49,11 +49,16 @@ class ClientController extends Controller
             // Generate a unique filename for the image
             $filename = time() . '.' . $file->getClientOriginalExtension();
             
-            +-
             // Store the image in 'public/images' directory and get the path
-            $path = $file->storeAs('public/images', $filename);
+            $path = $file->storeAs('images', $filename, 'public'); // Store in 'public/images' directory
+            
+            // Debugging: Check the path
+            \Log::info('File stored at: ' . $path);
+        } else {
+            // Debugging: Log if no file is uploaded or file is invalid
+            \Log::info('No file uploaded or file is invalid.');
         }
-
+    
         // Insert the client associated with the authenticated user
         Client::create([
             'name' => $request->input('name'),
@@ -61,13 +66,13 @@ class ClientController extends Controller
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
             'type' => $request->input('type'),
-            'picture' => $path,
+            'picture' => $path ? 'storage/' . $path : null, // Store the relative path
             'user_id' => Auth::id(), // Directly associate the user ID with the client
         ]);
         
         // Redirect back or to the client index page with a success message
         return redirect()->route('client.index')->with('success', 'Client added successfully!');
-        }
+    }
                 
     
 
