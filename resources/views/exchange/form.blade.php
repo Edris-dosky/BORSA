@@ -5,7 +5,7 @@
     <div class="card-header">
         <div class="row">
             <div class="col-md-6 mt-2">
-                <h3 class="card-title col-6">Transaction Form</h3>
+                <h3 class="card-title col-6">Transaction Form {{ isset($data) ? "edit" : "add" }}</h3>
             </div>
             <div class="col-md-6 text-right">
                 <a href="{{route('exchange.index')}}" class="btn btn-info" >Table <i class="fe fe-grid fe-16"></i></a>
@@ -148,9 +148,9 @@
                     <label for="pay_method" class="form-label">Payment Method</label>
                     <select class="form-control select2" id="pay_method" name="pay_method">
                         <option selected>Choose...</option>
-                        <option value="credit_card" {{ ($data->amounts?->pay_method == "credit_card" || old('credit_card') == "credit_card") ? selected}}>Credit Card</option>
-                        <option value="paypal" {{ ($data->amounts?->pay_method == "paypal" || old('paypal') == "paypal") ? selected}}>PayPal</option>
-                        <option value="bank_transfer" {{ ($data->amounts?->pay_method == "bank_transfer" || old('bank_transfer') == "bank_transfer") ? selected}}}}>Bank Transfer</option>
+                        <option value="credit_card" {{ (( isset($data) && $data->amounts?->pay_method == "credit_card") || old('pay_method') == "credit_card") ? "selected" : ""}}>Credit Card</option>
+                        <option value="paypal" {{ (( isset($data) && $data->amounts?->pay_method == "paypal" ) || old('pay_method') == "paypal") ? "selected" : ""}}>PayPal</option>
+                        <option value="bank_transfer" {{ (( isset($data) && $data->amounts?->pay_method == "bank_transfer" ) || old('pay_method') == "bank_transfer") ? "selected" : ""}}}}>Bank Transfer</option>
                     </select>
                     @error('pay_method')
                     <div class="text-danger">{{ $message }}</div>
@@ -160,9 +160,9 @@
                     <label for="status" class="form-label">Status</label>
                     <select class="form-control select2" id="status" name="status">
                         <option selected>Choose...</option>
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                        <option value="failed">Failed</option>
+                        <option value="pending" {{ (( isset($data) && $data->amounts?->status == "pending") || old('status') == "pending") ? "selected" : ""}}>Pending</option>
+                        <option value="completed" {{ (( isset($data) && $data->amounts?->status == "completed") || old('status') == "completed") ? "selected" : ""}} >Completed</option>
+                        <option value="failed" {{ (( isset($data) && $data->amounts?->status == "failed") || old('status') == "failed") ? "selected" : ""}}>Failed</option>
                     </select>
                     @error('status')
                     <div class="text-danger">{{ $message }}</div>
