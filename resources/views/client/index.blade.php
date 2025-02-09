@@ -38,7 +38,7 @@
                             <td>
                                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUser"><span class="fe fe-edit"></span></button>
                                 <button id='1' class="btn btn-danger btndelete"><span class="fe fe-trash" style="color:#ffffff" data-toggle="tooltip" title="Delete"></span></button>
-                                <button class="btn btn-info btn-sm show-client" 
+                                <button class="btn btn-success show-client" 
                                         data-id="{{ $client->id }}" 
                                         data-name="{{ $client->name }}" 
                                         data-email="{{ $client->email }}" 
@@ -47,8 +47,9 @@
                                         data-type="{{ $client->type }}" 
                                         data-user="{{ $client->user?->name }}" 
                                         data-picture="{{ $client->picture }}">
-                                    Show
+                                        <span class="fe fe-eye" style="color:#ffffff" data-toggle="tooltip" title="show"></span>
                                 </button>
+                                <a href="{{route('client.show',$client->id)}}" class="btn btn-info" >Show More</a>
                             </td>
                         </tr>
                     @empty
@@ -92,6 +93,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="" class="btn btn-success" >Show More</a>
                 </div>
             </div>
         </div>
@@ -167,33 +169,45 @@
             });
 
             Inputmask("9999-999-99-99").mask("#phoneNumber");
-        });
     </script>
     <script>
-        $(document).ready(function() {
-            // Attach click event to "Show" buttons
-            $('.show-client').on('click', function() {
-                // Retrieve data attributes
-                var clientId = $(this).data('id');
-                var clientName = $(this).data('name');
-                var clientEmail = $(this).data('email');
-                var clientPhone = $(this).data('phone');
-                var clientAddress = $(this).data('address');
-                var clientType = $(this).data('type');
-                var clientUser = $(this).data('user');
-                var clientPicture = $(this).data('picture');
-    
-                // Populate modal fields
-                $('#clientPicture').attr('src', clientPicture);
-                $('#clientName').text(clientName);
-                $('#clientType').text(clientType);
-                $('#clientEmail').text(clientEmail);
-                $('#clientPhone').text(clientPhone);
-                $('#clientAddress').text(clientAddress);
-    
-                // Show the modal
-                $('#profileModal').modal('show');
-            });
-        });
+    $(document).ready(function() {
+    // Attach click event to "Show" buttons
+    $('.show-client').on('click', function() {
+        // Retrieve data attributes
+        var clientId = $(this).data('id');
+        var clientName = $(this).data('name');
+        var clientEmail = $(this).data('email');
+        var clientPhone = $(this).data('phone');
+        var clientAddress = $(this).data('address');
+        var clientType = $(this).data('type');
+        var clientUser = $(this).data('user');
+        var clientPicture = $(this).data('picture');
+
+        // Populate modal fields
+        $('#clientName').text(clientName);
+        $('#clientType').text(clientType);
+        $('#clientEmail').text(clientEmail);
+        $('#clientPhone').text(clientPhone);
+        $('#clientAddress').text(clientAddress);
+
+        // Set the "Show More" button's href dynamically using clientId
+        var showMoreUrl = "{{ route('client.show', ':id') }}";
+        showMoreUrl = showMoreUrl.replace(':id', clientId); // Replace placeholder with the actual client ID
+        $('#showMoreBtn').attr('href', showMoreUrl);
+
+        // If there is a picture, set it
+        if (clientPicture) {
+            $('#clientPicture').attr('src', clientPicture).show();
+        } else {
+            $('#clientPicture').hide(); // Hide if there's no picture
+        }
+
+        // Show the modal using Bootstrap 5's Modal class
+        var myModal = new bootstrap.Modal(document.getElementById('profileModal'));
+        myModal.show();
+    });
+});
+
     </script>
 @endsection

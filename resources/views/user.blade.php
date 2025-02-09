@@ -191,6 +191,5 @@
         });
     });
 </script>
-
 @include('button')
 @endsection

@@ -64,8 +64,6 @@
                     </div> <!-- end section -->
                     <div class="row my-4">
                         <!-- Small table -->
-
-                        <a href="{{ route('currency.show', $currency->id) }}" class="bg-indigo-500 text-white px-2 py-1 rounded">Show</a>
                         <div class="col-md-12">
                             <div class="card shadow">
                                 <div class="card-body">
@@ -74,34 +72,22 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Date</th>
-                                                <th>User added</th>
+                                               
                                                 <th>Currency</th>
                                                 <th>Last Price</th>
-                                                <th>status</th>
+                                                <th>User added</th>
+                                                <th>Date</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach($currency_value as $index => $currency)
                                             <tr data-id="{{ $currency->id }}">
-                                                <td class="currency-name">{{ $index+1 }}</td>
+                                                <td class="currency-index">{{ $index+1 }}</td>
                                                 <td class="currency-name">{{ $currency->currency }}</td>
                                                 <td class="currency-amount">{{ $currency->currencyAmount->last()->amount }}</td>
                                                 <td class="currency-user">{{ $currency->currencyAmount->last()->user->name }}</td>
                                                 <td class="currency-created-at">{{ $currency->currencyAmount->last()->created_at->diffForHumans() }}</td>
-                                                <td>
-                                                    @if($currency->currencyAmount->count() > 1)
-                                                        @php
-                                                            $result = percentageDifference($currency->currencyAmount->last()->amount, $currency->currencyAmount->reverse()->skip(1)->first()->amount);
-                                                        @endphp
-                                                        {!! $result !!}
-                                                    @else
-                                                    <i class="fa-solid fa-caret-left"></i>
-                                                    0%
-                                                    @endif
-                                                </td>
-                                                
                                                 <td>
                                                     <button 
                                                         class="btn btn-success view-btn" 
@@ -220,16 +206,17 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 
 
   
-⁡⁢⁣⁢<!-- View Price Modal -->
+⁡⁢⁣⁢<!-- View Price Modal -->⁡
 <div class="modal fade" id="viewPriceModal" tabindex="-1" role="dialog" aria-labelledby="viewPriceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="viewPriceModalLabel">User Information</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close close_close" >
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -250,15 +237,13 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="btn btn-secondary close_close" >
                     Cancel
                 </button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 
 <!-- data table button -->
@@ -287,9 +272,15 @@
 
 {{-- view modal --}}
 <script>
-/// Listen for click on "View" button
+    // Variable to store the button that opened the modal
+let triggeredButton = null;
+
+// Listen for click on "View" button
 document.querySelectorAll('.view-btn').forEach(button => {
     button.addEventListener('click', function() {
+        // Save the button that triggered the modal
+        triggeredButton = this;
+
         const currencyId = this.getAttribute('data-id');
 
         // Generate the dynamic URL to fetch data
@@ -333,7 +324,7 @@ document.querySelectorAll('.view-btn').forEach(button => {
                     userDetailsTable.innerHTML = '<tr><td colspan="4">No data available</td></tr>';
                 }
 
-                // Show the modal
+                // Open the modal using Bootstrap's JavaScript API
                 $('#viewPriceModal').modal('show');
             },
             error: function(error) {
@@ -343,7 +334,6 @@ document.querySelectorAll('.view-btn').forEach(button => {
         });
     });
 });
-
 </script>
 
 {{-- edit modal --}}
@@ -391,7 +381,7 @@ document.getElementById('currencyForm').addEventListener('submit', function (e) 
             row.querySelector('.currency-name').textContent = response.currency;
             row.querySelector('.currency-amount').textContent = response.amount;
             row.querySelector('.currency-user').textContent = response.user_name;
-            row.querySelector('.currency-created-at').textContent = response.created_at;
+            row.querySelector('.currency-created-at').textContent = response.created_at ? moment(response.created_at).fromNow() : '-';
 
             // Close the modal
             $('#currencyModalEdit').modal('hide');

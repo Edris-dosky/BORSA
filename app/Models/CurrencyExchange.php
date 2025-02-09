@@ -12,4 +12,11 @@ class CurrencyExchange extends Model
     public function users(){
         return $this->belongsTo(User::class ,'user_id');
     }
+    public function amounts(){
+        return $this->belongsTo(Amount::class ,'amount_id');
+    }
+    public function clients(){
+        return $this->belongsTo(Client::class ,'client_id');
+    }
+
 }

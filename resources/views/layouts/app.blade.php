@@ -31,7 +31,8 @@
 
             <!-- Custom CSS -->
             <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
+            <!-- SweetAlert JS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="vertical  light">
         <div class="wrapper">
@@ -42,6 +43,32 @@
                     <div class="row justify-content-center">
                         <div class="col-12">
                 @yield('content')
+                @if (session('success'))
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: '{{ session('success') }}',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+                @endif
+                
+                @if ($errors->any())
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: '{{ $errors->first() }}',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    });
+                </script>
+                @endif
+                
                      </div> <!-- .col-12 -->
                     </div> <!-- .row -->
                 </div> <!-- .container-fluid -->
@@ -170,36 +197,10 @@
                 </div>
                 </main> <!-- main -->
         </div>
-        @if (session('success'))
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                swal({
-                    title: "Success!",
-                    text: "{{ session('success') }}",
-                    icon: "success",
-                    button: "OK",
-                });
-            });
-        </script>
-      @endif
-      @if ($errors->any())
-      <script>
-          document.addEventListener('DOMContentLoaded', function() {
-              swal({
-                  title: "Error!",
-                  text: "{{ $errors->first() }}",
-                  icon: "error",
-                  button: "OK",
-              });
-          });
-      </script>
-    @endif
 
     </body>
 </html>
-<!-- SweetAlert JS -->
-<!-- SweetAlert JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
 
 <!-- Local JS Files -->
 <script src="{{ asset('js/jquery.min.js') }}"></script>

@@ -10,7 +10,6 @@ use App\Http\Controllers\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    
     return view('auth.login');
 });
 
@@ -25,11 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('/exchange' , CurrencyExchangeController::class)->names('exchange');
     Route::get('/users', [RegisteredUserController::class, 'create'])->name('users');
     Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+
     
-    Route::get('/profile/edit', function () {
-        return 'Profile edit page placeholder';
-    })->name('profile.edit');
     
+
 });
 
 

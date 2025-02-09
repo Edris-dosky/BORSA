@@ -31,9 +31,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
           <div>{{ Auth::user()->name }}</div>
-          <x-dropdown-link :href="route('profile.edit')" class="dropdown-item">
-            {{ __('Profile') }}
-        </x-dropdown-link>
+        
           <form method="POST" action="{{ route('logout') }}">
             @csrf
 
@@ -93,59 +91,13 @@
         <span>Components</span>
       </p>
       <ul class="navbar-nav flex-fill w-100 mb-2">
-        <li class="nav-item dropdown">
-          <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-            <i class="fe fe-box fe-16"></i>
-            <span class="ml-3 item-text">UI elements</span>
-          </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-color.html"><span class="ml-1 item-text">Colors</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-typograpy.html"><span class="ml-1 item-text">Typograpy</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-icons.html"><span class="ml-1 item-text">Icons</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-buttons.html"><span class="ml-1 item-text">Buttons</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-notification.html"><span class="ml-1 item-text">Notifications</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-modals.html"><span class="ml-1 item-text">Modals</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-tabs-accordion.html"><span class="ml-1 item-text">Tabs & Accordion</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="./ui-progress.html"><span class="ml-1 item-text">Progress</span></a>
-            </li>
-          </ul>
-        </li>
         <li class="nav-item w-100">
           <a class="nav-link" href="{{ route('currency.index') }}">
             <i class="fe fe-dollar-sign fe-16"></i>
             <span class="ml-3 item-text">Currency</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
-            <i class="fe fe-credit-card fe-16"></i>
-            <span class="ml-3 item-text">Client</span>
-          </a>
-          <ul class="collapse list-unstyled pl-4 w-100" id="forms">
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="{{route('client.index')}}"><span class="ml-1 item-text">Show Clients</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link pl-3" href="{{route('client.create')}}"><span class="ml-1 item-text">Add Client</span></a>
-            </li>
-          </ul>
-        </li>
+        
         <li class="nav-item dropdown">
           <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fe fe-grid fe-16"></i>
@@ -153,7 +105,7 @@
           </a>
           <ul class="collapse list-unstyled pl-4 w-100" id="tables">
             <li class="nav-item">
-              <a class="nav-link pl-3" href="{{route('exchange.index')}}"><span class="ml-1 item-text">Basic Tables</span></a>
+              <a class="nav-link pl-3" href="{{route('exchange.index')}}"><span class="ml-1 item-text">Exchange Table</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link pl-3" href="{{route('exchange.create')}}"><span class="ml-1 item-text">Add Exchange</span></a>
@@ -177,6 +129,32 @@
             </li>
           </ul>
         </li>
+        
+      </ul>
+      <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Apps</span>
+      </p>
+      <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+          <a class="nav-link" href="{{route('users')}}">
+            <i class="fe fe-user fe-16"></i>
+            <span class="ml-3 item-text">Users</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+            <i class="fe fe-credit-card fe-16"></i>
+            <span class="ml-3 item-text">Client</span>
+          </a>
+          <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('client.index')}}"><span class="ml-1 item-text">Show Clients</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link pl-3" href="{{route('client.create')}}"><span class="ml-1 item-text">Add Client</span></a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item dropdown">
           <a href="#addAccount" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
             <i class="fe fe-user-plus fe-16"></i>
@@ -184,18 +162,13 @@
           </a>
           <ul class="collapse list-unstyled pl-4 w-100" id="addAccount">
             <li class="nav-item">
-              <a class="nav-link pl-3" href="client.php"><span class="ml-1 item-text">Client</span></a>
+              <a class="nav-link pl-3" href="{{route('client.create')}}"><span class="ml-1 item-text">Client</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link pl-3" href="{{route('users')}}"><span class="ml-1 item-text">User</span></a>
             </li>
           </ul>
         </li>
-      </ul>
-      <p class="text-muted nav-heading mt-4 mb-1">
-        <span>Apps</span>
-      </p>
-      <ul class="navbar-nav flex-fill w-100 mb-2">
         <li class="nav-item w-100">
           <a class="nav-link" href="calendar.html">
             <i class="fe fe-calendar fe-16"></i>

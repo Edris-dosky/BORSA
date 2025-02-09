@@ -5,22 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Amount;
 use App\Models\Client;
 use App\Models\Currency;
+use App\Models\CurrencyExchange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CurrencyExchangeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {   
-        return view('exchange.index');
+        $data = CurrencyExchange::with(['users','amounts','clients'])->get();
+        return view('exchange.index' , compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $currencies =   Currency::with(['currencyAmount.user'])->get();
@@ -28,9 +26,6 @@ class CurrencyExchangeController extends Controller
         return view('exchange.form',compact('currencies','clients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
     
@@ -60,36 +55,27 @@ class CurrencyExchangeController extends Controller
                 'from' => $validation_data['from'],
                 'to' => $validation_data['to'],
             ]);
-            return redirect()->back()->with('success', 'Currency added successfully!');
+            return redirect()->back()->with('success', value: 'Currency added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
+        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        //
+        $currencies =   Currency::with(['currencyAmount.user'])->get();
+        $clients = Client::all();
+        return view('exchange.form',compact('currencies','clients' ,'id'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

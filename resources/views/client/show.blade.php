@@ -1,67 +1,63 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-lg shadow-lg">
+    <div class="container mt-5 bg-white p-4 rounded-lg shadow-lg">
         <!-- Header Section -->
-        <div class="flex items-center mb-8">
+        <div class="d-flex align-items-center mb-5">
             @if($client->picture)
-                <img src="{{ Storage::url($client->picture) }}" alt="Client Picture" class="w-24 h-24 rounded-full object-cover border-2 border-indigo-500 mr-6">
+                <img src="{{ Storage::url($client->picture) }}" alt="Client Picture" class="rounded-circle w-25 h-25 border-2 border-primary me-4">
             @else
-                <div class="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-xl font-semibold text-gray-600 mr-6">
+                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center text-lg text-secondary w-25 h-25 me-4">
                     {{ strtoupper(substr($client->name, 0, 1)) }}
                 </div>
             @endif
             <div>
-                <h2 class="text-3xl font-semibold text-gray-800">{{ $client->name }}</h2>
-                <p class="text-sm text-gray-500">{{ $client->type }}</p>
+                <h2 class="h3 text-dark">{{ $client->name }}</h2>
+                <p class="small text-muted">{{ $client->type }}</p>
             </div>
         </div>
 
         <!-- Client Details Section -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="row g-4">
             <!-- Left Side: Contact Info -->
-            <div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Contact Information</h3>
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-sm text-gray-500">Email</p>
-                        <p class="text-lg text-gray-700">{{ $client->email }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Phone</p>
-                        <p class="text-lg text-gray-700">{{ $client->phone }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Address</p>
-                        <p class="text-lg text-gray-700">{{ $client->address }}</p>
-                    </div>
+            <div class="col-md-6">
+                <h3 class="h5 text-dark mb-3">Contact Information</h3>
+                <div>
+                    <p class="small text-muted">Email</p>
+                    <p class="h6 text-dark">{{ $client->email }}</p>
+                </div>
+                <div>
+                    <p class="small text-muted">Phone</p>
+                    <p class="h6 text-dark">{{ $client->phone }}</p>
+                </div>
+                <div>
+                    <p class="small text-muted">Address</p>
+                    <p class="h6 text-dark">{{ $client->address }}</p>
                 </div>
             </div>
 
             <!-- Right Side: Type and Date -->
-            <div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">Client Information</h3>
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-sm text-gray-500">Client Type</p>
-                        <p class="text-lg text-gray-700">{{ $client->type }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Created At</p>
-                        <p class="text-lg text-gray-700">{{ $client->created_at->format('M d, Y') }}</p>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-500">Updated At</p>
-                        <p class="text-lg text-gray-700">{{ $client->updated_at->format('M d, Y') }}</p>
-                    </div>
+            <div class="col-md-6">
+                <h3 class="h5 text-dark mb-3">Client Information</h3>
+                <div>
+                    <p class="small text-muted">Client Type</p>
+                    <p class="h6 text-dark">{{ $client->type }}</p>
+                </div>
+                <div>
+                    <p class="small text-muted">Created At</p>
+                    <p class="h6 text-dark">{{ $client->created_at->format('M d, Y') }}</p>
+                </div>
+                <div>
+                    <p class="small text-muted">Updated At</p>
+                    <p class="h6 text-dark">{{ $client->updated_at->format('M d, Y') }}</p>
                 </div>
             </div>
         </div>
 
         <!-- Action Button Section -->
-        <div class="mt-8 flex justify-end space-x-4">
-            <a href="{{ route('client.index') }}" class="bg-gray-500 text-white px-6 py-2 rounded-md text-sm hover:bg-gray-600 focus:outline-none transition">Back to Clients</a>
-            <a href="{{ route('client.edit', $client->id) }}" class="bg-indigo-500 text-white px-6 py-2 rounded-md text-sm hover:bg-indigo-700 focus:outline-none transition">Edit Client</a>
+        <div class="mt-4 d-flex justify-content-end gap-3">
+            <a href="{{ route('client.index') }}" class="btn btn-secondary btn-sm">Back to Clients</a>
+            <a href="{{ route('client.edit', $client->id) }}" class="btn btn-primary btn-sm">Edit Client</a>
         </div>
     </div>
 @endsection

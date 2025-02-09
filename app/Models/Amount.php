@@ -8,4 +8,7 @@ class Amount extends Model
 {
     
     protected $guarded = [];
+    public function exchange_amounts(){
+        return $this->hasMany(CurrencyAmount::class ,'amount_id');
+    }
 }

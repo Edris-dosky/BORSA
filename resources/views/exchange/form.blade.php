@@ -1,111 +1,147 @@
 @extends('layouts.app')
-
 @section('content')
 
-<div class="container mt-5">
-    <div class="card shadow-lg rounded-lg">
-        <div class="card-header bg-primary text-white">
-            <h2 class="h4 mb-0">Transaction Form</h2>
+<div class="card card-default">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-md-6 mt-2">
+                <h3 class="card-title col-6">Transaction Form</h3>
+                @if (isset($id))
+                    this is update form
+                    @else
+                    this is create form
+                @endif
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="{{route('exchange.index')}}" class="btn btn-info" >Table <i class="fe fe-grid fe-16"></i></a>
+            </div>
         </div>
-        <div class="card-body">
-            <form action="{{ route('exchange.store') }}" method="POST">
-                @csrf
-                <div class="row mb-4">
-                    <div class="col-md-6">
+      
+      <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove">
+          <i class="fas fa-times"></i>
+        </button>
+        
+      </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <form action="{{ route('exchange.store') }}" method="POST">
+            @csrf
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Amount Field -->
+                    <div class="mb-4">
                         <label for="amount" class="form-label">Amount</label>
                         <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount">
                     </div>
-                    <div class="col-md-6">
-                        <label for="from" class="form-label">From</label>
-                        <select class="form-select" id="from" name="from">
-                            @foreach ($currencies as $currency)
-                                <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
-                                    {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label for="to" class="form-label">To</label>
-                        <select class="form-select" id="to" name="to">
-                            @foreach ($currencies as $currency)
-                                <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
-                                    {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="client_id" class="form-label">Client ID</label>
-                        <select class="form-select" id="client_id" name="client_id">
-                            <option value="1" selected>Unknown</option>
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <!-- From Currency Dropdown with Bootstrap Select -->
+                <div class="form-group col-md-3">
+                    <label for="from">From Currency</label>
+                    <select class="form-control select2" style="width: 100%;" id="from" name="from">
+                        <option selected="selected" disabled>Select Currency Type</option>
+                        @foreach ($currencies as $currency)
+                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
+                                {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <!-- To Currency Dropdown with Bootstrap Select -->
+                <div class="form-group col-md-3 ">
+                    <label for="to">To Currency</label>
+                    <select class="form-control select2" style="width: 100%;" id="to" name="to">
+                        <option selected="selected" disabled>Select Currency Type</option>
+                        @foreach ($currencies as $currency)
+                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
+                                {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                
+                <!-- Client Dropdown with Bootstrap Select -->
+                <div class="form-group col-md-3">
+                    <label for="client_id">Client ID</label>
+                    <select class="form-control select2" style="width: 100%;" id="client_id" name="client_id">
+                        <option value="1" selected="selected" disabled>Unknown</option>
+                        @foreach ($clients as $client)
+                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label for="phone" class="form-label">Phone Number</label>
-                        <select class="form-select" id="phone" name="phone">
-                            <option value="1" selected>Unknown</option>
-                            @foreach ($clients as $client)
-                                <option value="{{ $client->id }}">{{ $client->phone }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-6">
+                <!-- Phone Dropdown with Bootstrap Select -->
+                <div class="form-group col-md-3">
+                    <label for="phone">Phone Number</label>
+                    <select class="form-control select2" style="width: 100%;" id="phone" name="phone">
+                        <option value="1" selected="selected" disabled>Unknown</option>
+                        @foreach ($clients as $client)
+                            <option value="{{ $client->id }}">{{ $client->phone }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Fees Field -->
+                <div class="form-group col-md-3">
+                    <div class="mb-4">
                         <label for="fees" class="form-label">Fees</label>
                         <input type="number" class="form-control" id="fees" name="fees" placeholder="Enter fees">
                     </div>
                 </div>
+                <div class="form-group col-md-3">
+                    <label for="constraint" class="form-label">Constraint</label>
+                    <input type="text" class="form-control" id="constraint" name="constraint" placeholder="Enter constraint">
+                </div>
+                
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label for="constraint" class="form-label">Fees Percentage %</label>
-                        <input type="text" class="form-control" id="constraint" name="constraint" placeholder="Enter constraint">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="pay_method" class="form-label">Payment Method</label>
-                        <select class="form-select" id="pay_method" name="pay_method">
-                            <option selected>Choose...</option>
-                            <option value="credit_card">Credit Card</option>
-                            <option value="paypal">PayPal</option>
-                            <option value="bank_transfer">Bank Transfer</option>
-                        </select>
-                    </div>
+                <!-- Payment Method Dropdown -->
+                <div class="col-md-6">
+                    <label for="pay_method" class="form-label">Payment Method</label>
+                    <select class="form-control select2" id="pay_method" name="pay_method">
+                        <option selected>Choose...</option>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-control select2" id="status" name="status">
+                        <option selected>Choose...</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                        <option value="failed">Failed</option>
+                    </select>
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label for="status" class="form-label">Status</label>
-                        <select class="form-select" id="status" name="status">
-                            <option selected>Choose...</option>
-                            <option value="pending">Pending</option>
-                            <option value="completed">Completed</option>
-                            <option value="failed">Failed</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="Price" class="form-label">Price</label>
-                        <input type="number" name="price" class="form-control" id="Price" placeholder="Enter total" readonly>
-                    </div>
+                <!-- Exchange Rate Field -->
+                <div class="col-md-6">
+                    <label for="Price" class="form-label">Price</label>
+                    <input type="number" name="price" class="form-control" id="Price" placeholder="Enter total" readonly>
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        <label for="total" class="form-label">Total</label>
-                        <input type="number" class="form-control" id="total" name="tottal" placeholder="Enter total" readonly>
-                    </div>
+                <!-- Total Field -->
+                <div class="col-md-6">
+                    <label for="total" class="form-label">Total</label>
+                    <input type="number" class="form-control" id="total" name="tottal" placeholder="Enter total" readonly>
                 </div>
-
-                <button type="submit" class="btn btn-success w-100">Submit</button>
-            </form>
+            </div>
+            <!-- /.row -->
+    </div>
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <!-- Action Buttons -->
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-primary ">Submit</button>
+            </div>
         </div>
     </div>
 </div>

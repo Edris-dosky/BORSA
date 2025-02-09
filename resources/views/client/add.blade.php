@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container mt-5">
-      <div class="card shadow-lg rounded-lg">
-        <div class="card-header bg-primary text-white">
-          <h2 class="h4 mb-0">Add New Client</h2>
+      <div class="card shadow-lg rounded-sm">
+        <div class="card-header bg-info text-white">
+          <h2 class="h4 mb-0 text-white" >Add New Client</h2>
         </div>
         <div class="card-body">
           <form id="addClientForm" action="{{route('client.store')}}" method="POST" enctype="multipart/form-data">
@@ -34,14 +34,15 @@
               <input type="text" id="address" name="address" class="form-control" placeholder="Enter address" required>
             </div>
 
-            <!-- Client Type Dropdown -->
-            <div class="mb-4">
-              <label for="type" class="form-label">Client Type</label>
-              <select id="type" name="type" class="form-select" required>
-                <option value="Person">Person</option>
-                <option value="Company">Company</option>
-              </select>
-            </div>
+           <!-- Client Type Dropdown with Bootstrap Select -->
+          <div class="mb-4">
+            <label for="type" class="form-label">Client Type</label>
+            <select id="type" name="type" class="form-select selectpicker" required>
+              <option value="Person">Person</option>
+              <option value="Company">Company</option>
+            </select>
+          </div>
+
 
             <!-- Profile Picture Upload -->
             <div class="mb-4">
