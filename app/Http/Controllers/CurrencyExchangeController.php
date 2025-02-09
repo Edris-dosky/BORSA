@@ -68,7 +68,8 @@ class CurrencyExchangeController extends Controller
     {
         $currencies =   Currency::with(['currencyAmount.user'])->get();
         $clients = Client::all();
-        return view('exchange.form',compact('currencies','clients' ,'id'));
+        $data = CurrencyExchange::with(['users','amounts','clients'])->findOrFail($id);
+        return view('exchange.form',compact('currencies','clients' ,'data'));
     }
 
     public function update(Request $request, string $id)

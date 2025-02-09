@@ -6,11 +6,6 @@
         <div class="row">
             <div class="col-md-6 mt-2">
                 <h3 class="card-title col-6">Transaction Form</h3>
-                @if (isset($id))
-                    this is update form
-                    @else
-                    this is create form
-                @endif
             </div>
             <div class="col-md-6 text-right">
                 <a href="{{route('exchange.index')}}" class="btn btn-info" >Table <i class="fe fe-grid fe-16"></i></a>
@@ -29,15 +24,18 @@
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form action="{{ route('exchange.store') }}" method="POST">
+        <form action="{{ isset($data) ? route('exchange.update', $data->id) : route('exchange.store') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <!-- Amount Field -->
                     <div class="mb-4">
                         <label for="amount" class="form-label">Amount</label>
-                        <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount">
+                        <input type="number" name="amount" class="form-control" id="amount" placeholder="Enter amount" value="{{ isset($data) ? $data->amounts?->amount : old('amount')}}">
                     </div>
+                    @error('amount')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- From Currency Dropdown with Bootstrap Select -->
@@ -46,11 +44,20 @@
                     <select class="form-control select2" style="width: 100%;" id="from" name="from">
                         <option selected="selected" disabled>Select Currency Type</option>
                         @foreach ($currencies as $currency)
-                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
-                                {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
-                            </option>
+                            <option value="{{ $currency->currency . ':' . $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}"
+                                @if (isset($data) && $data->from == ($currency->currency .' : '. $currency->currencyAmount?->last()->amount))
+                                    selected="selected"
+                                    @elseif (old('from') == ($currency->currency .' : '. $currency->currencyAmount?->last()->amount))
+                                    selected="selected"
+                                @endif
+                            >
+                                {{ $currency->currency . ':' . $currency->currencyAmount?->last()->amount }}
+                            </option> 
                         @endforeach
                     </select>
+                    @error('from')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <!-- To Currency Dropdown with Bootstrap Select -->
@@ -59,11 +66,20 @@
                     <select class="form-control select2" style="width: 100%;" id="to" name="to">
                         <option selected="selected" disabled>Select Currency Type</option>
                         @foreach ($currencies as $currency)
-                            <option value="{{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }}">
+                            <option value="{{ $currency->currency .' : '. $currency->currencyAmount?->last()->amount }}" data-rate="{{ $currency->currencyAmount?->last()->amount }} "
+                                @if (isset($data) && $data->to == ($currency->currency .' : '. $currency->currencyAmount?->last()->amount))
+                                selected="selected"
+                                @elseif (old('to') == ($currency->currency .' : '. $currency->currencyAmount?->last()->amount))
+                                    selected="selected"
+                            @endif
+                        >
                                 {{ $currency->currency }} : {{ $currency->currencyAmount?->last()->amount }}
                             </option>
                         @endforeach
                     </select>
+                    @error('to')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 
                 <!-- Client Dropdown with Bootstrap Select -->
@@ -72,9 +88,19 @@
                     <select class="form-control select2" style="width: 100%;" id="client_id" name="client_id">
                         <option value="1" selected="selected" disabled>Unknown</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->name }}</option>
+                            <option value="{{ $client->id }}"
+                                @if (isset($data) && $data->clients->id == $client->id)
+                                selected="selected"
+                                @elseif (old('client_id') == $client->id)
+                                    selected="selected"
+                            @endif
+                        >
+                                {{ $client->name }} </option>
                         @endforeach
                     </select>
+                    @error('client_id')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Phone Dropdown with Bootstrap Select -->
@@ -83,21 +109,37 @@
                     <select class="form-control select2" style="width: 100%;" id="phone" name="phone">
                         <option value="1" selected="selected" disabled>Unknown</option>
                         @foreach ($clients as $client)
-                            <option value="{{ $client->id }}">{{ $client->phone }}</option>
+                            <option value="{{ $client->id }}"
+                                @if (isset($data) && $data->clients->id == $client->id)
+                                selected="selected"
+                                @elseif (old('client_id') == $client->id)
+                                    selected="selected"                                
+                            @endif
+                        >
+                                {{ $client->phone }}</option>
                         @endforeach
                     </select>
+                    @error('phone')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Fees Field -->
                 <div class="form-group col-md-3">
                     <div class="mb-4">
                         <label for="fees" class="form-label">Fees</label>
-                        <input type="number" class="form-control" id="fees" name="fees" placeholder="Enter fees">
+                        <input type="number" class="form-control" id="fees" name="fees" placeholder="Enter fees" value="{{ isset($data) ? $data->amounts?->fees : old('fees')}}">
                     </div>
+                    @error('fees')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group col-md-3">
                     <label for="constraint" class="form-label">Constraint</label>
-                    <input type="text" class="form-control" id="constraint" name="constraint" placeholder="Enter constraint">
+                    <input type="text" class="form-control" id="constraint" name="constraint" placeholder="Enter constraint" value="{{ isset($data) ? $data->amounts?->constraint : old('constraint')}}">
+                    @error('Constraint')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 
 
@@ -106,10 +148,13 @@
                     <label for="pay_method" class="form-label">Payment Method</label>
                     <select class="form-control select2" id="pay_method" name="pay_method">
                         <option selected>Choose...</option>
-                        <option value="credit_card">Credit Card</option>
-                        <option value="paypal">PayPal</option>
-                        <option value="bank_transfer">Bank Transfer</option>
+                        <option value="credit_card" {{ ($data->amounts?->pay_method == "credit_card" || old('credit_card') == "credit_card") ? selected}}>Credit Card</option>
+                        <option value="paypal" {{ ($data->amounts?->pay_method == "paypal" || old('paypal') == "paypal") ? selected}}>PayPal</option>
+                        <option value="bank_transfer" {{ ($data->amounts?->pay_method == "bank_transfer" || old('bank_transfer') == "bank_transfer") ? selected}}}}>Bank Transfer</option>
                     </select>
+                    @error('pay_method')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="col-md-6">
                     <label for="status" class="form-label">Status</label>
@@ -119,6 +164,9 @@
                         <option value="completed">Completed</option>
                         <option value="failed">Failed</option>
                     </select>
+                    @error('status')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Exchange Rate Field -->
