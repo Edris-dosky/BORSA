@@ -7,6 +7,7 @@ use App\Http\Controllers\CurrencyExchangeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/exchange' , CurrencyExchangeController::class)->names('exchange');
     Route::get('/users', [RegisteredUserController::class, 'create'])->name('users');
     Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
-
+    Route::resource('/withdraw', WithdrawController::class)->names('withdraw');
     
     
 

@@ -63,4 +63,8 @@ class User extends Authenticatable
         return $this->hasMany(CurrencyExchange::class, 'user_id');
         
     }
+    public function withdraw_user() {
+        return $this->hasMany(Withdraw::class, 'user_id');
+        
+    }
 }

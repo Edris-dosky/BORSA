@@ -122,7 +122,7 @@
               <a class="nav-link pl-3" href="deposite.php"><span class="ml-1 item-text">Deposite</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link pl-3" href="withdraw.php"><span class="ml-1 item-text">Withdraw</span></a>
+              <a class="nav-link pl-3" href="{{ route('withdraw.index')}}"><span class="ml-1 item-text">Withdraw</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link pl-3" href="currencyExchange.php"><span class="ml-1 item-text">Currency Exchange</span></a>

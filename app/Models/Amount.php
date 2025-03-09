@@ -11,4 +11,7 @@ class Amount extends Model
     public function exchange_amounts(){
         return $this->hasMany(CurrencyAmount::class ,'amount_id');
     }
+    public function withdraw_amounts(){
+        return $this->hasMany(Withdraw::class ,'amount_id');
+    }
 }

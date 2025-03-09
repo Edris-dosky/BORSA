@@ -14,7 +14,12 @@ class Client extends Model
     {
         return $this->belongsTo(User::class, 'user_id'); // Specify the foreign key if it's not the default
     }
-    public function exchange_clients(){
+    public function exchange_clients()
+    {
         return $this->hasMany(CurrencyAmount::class ,'client_id');
+    }
+    public function withdraw_clients()
+    {
+        return $this->hasMany(Withdraw::class ,'client_id');
     }
 }
