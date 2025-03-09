@@ -4,9 +4,6 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\CurrencyExchangeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PublicController;
-use App\Http\Controllers\UsersController;
 use App\Http\Controllers\WithdrawController;
 use Illuminate\Support\Facades\Route;
 

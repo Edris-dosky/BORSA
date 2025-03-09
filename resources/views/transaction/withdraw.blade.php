@@ -33,8 +33,7 @@
                     <td>{{$index+1}}</td>
                     <td><a href="{{route('client.show',$row->clients->id)}}"> {{$row->clients->name}} </a></td>
                     <td>{{$row->amounts?->amount}}</td>
-                    <td>{{$row->from}}</td>
-                    <td>{{$row->to}}</td>
+                    <td>{{$row->currency?->name}}</td>
                     <td>{{$row->amounts?->fees}}</td>
                     <td>{{$row->amounts?->tottal}}</td>
                     <td>{{$row->amounts?->pay_method}}</td>

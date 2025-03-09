@@ -15,4 +15,7 @@ class Currency extends Model
     public function users(){
         return $this->belongsTo(User::class ,'user_id');
     }
+    public function withdraw_currency(){
+        return $this->hasMany(Withdraw::class ,'currency_id');
+    }
 }

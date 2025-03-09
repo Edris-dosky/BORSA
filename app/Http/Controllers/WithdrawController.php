@@ -12,7 +12,7 @@ class WithdrawController extends Controller
      */
     public function index()
     {
-        $data = Withdraw::with(['users','amounts','clients'])->get();
+        $data = Withdraw::with(['users','amounts','clients','currencies'])->get();
         return view('transaction.withdraw',compact('data'));
     }
 

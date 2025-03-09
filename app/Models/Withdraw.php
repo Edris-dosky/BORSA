@@ -18,4 +18,7 @@ class Withdraw extends Model
     public function clients(){
         return $this->belongsTo(Client::class ,'client_id');
     }
+    public function currencies(){
+        return $this->belongsTo(Currency::class ,'client_id');
+    }
 }
