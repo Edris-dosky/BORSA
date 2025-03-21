@@ -8,7 +8,7 @@
         <a href="{{ route('withdraw.create')}}" class="btn btn-info" type="button"><span class="fe fe-plus"></span>Add</a>
         
     </div>
-</div>
+</div>w
 <div class="card shadow">
     <div class="card-body">
         <!-- table -->
@@ -33,14 +33,14 @@
                     <td>{{$index+1}}</td>
                     <td><a href="{{route('client.show',$row->clients->id)}}"> {{$row->clients->name}} </a></td>
                     <td>{{$row->amounts?->amount}}</td>
-                    <td>{{$row->currency?->name}}</td>
+                    <td>{{$row->currencies?->currency}}</td>
                     <td>{{$row->amounts?->fees}}</td>
                     <td>{{$row->amounts?->tottal}}</td>
                     <td>{{$row->amounts?->pay_method}}</td>
                     <td>{{$row->amounts?->status}}</td>
                     <td>{{$row->users?->name}}</td>
                     <td>
-                        <a href="{{route('exchange.edit' , $row->id)}}" class="btn btn-warning"><span class="fe fe-edit"></span></a>
+                        <a href="{{route('withdraw.edit' , $row->id)}}" class="btn btn-warning"><span class="fe fe-edit"></span></a>
                         <button id='1' class="btn btn-danger btndelete"><span class="fe fe-trash" style="color:#ffffff" data-toggle="tooltip" title="Delete"></span></button>
                         <button class="btn btn-success show-client">
                                 <span class="fe fe-eye" style="color:#ffffff" data-toggle="tooltip" title="show"></span>

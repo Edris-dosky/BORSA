@@ -15,8 +15,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('borsa')->group(function () {
     Route::resource('/currecy', CurrencyController::class)->except(['edit','create'])->names('currency');
     Route::resource('/client' , ClientController::class)->names('client');
     Route::resource('/exchange' , CurrencyExchangeController::class)->names('exchange');
